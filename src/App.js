@@ -1,10 +1,11 @@
 import { Console } from "@woowacourse/mission-utils";
 
-function isNotNumberSeparator(separator) {
-  if (/\d/.test(separator)) {
+function isNotNumberSeparator(separators) {
+  if (separators.some(sep => /\d/.test(sep))) {
     throw new Error("[ERROR] 숫자는 구분자에 포함될 수 없습니다.");
   }
-  return separator;
+
+  return separators;
 }
 
 function extractCustomSeparator(userInput) {
@@ -21,9 +22,11 @@ function extractCustomSeparator(userInput) {
 
     const customSeparatorArray = userInput.slice(2, lastSeparatorIndex);
     defaultSeparators.push(...customSeparatorArray);
-
-    return defaultSeparators;
   }
+
+  const validSeparators = isNotNumberSeparator(defaultSeparators);
+
+  return validSeparators;
 }
 
 function printMessage(message) {
@@ -31,7 +34,7 @@ function printMessage(message) {
 }
 
 async function getInput() {
-  return await Console.readLineAsync('덧셈할 문자열을 입력해 주세요.\n');
+  return await Console.readLineAsync("덧셈할 문자열을 입력해 주세요.\n");
 }
 
 class App {
@@ -43,6 +46,10 @@ class App {
       printMessage("결과 : 0");
       return;
     }
+
+    const separator = extractCustomSeparator(userInput);
+
+    printMessage(separator);
   }
 }
 
