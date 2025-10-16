@@ -47,6 +47,23 @@ function splitBySeparators(separators, inputBody) {
   return result.split(" ").map((s) => s.trim());
 }
 
+function isNumber(element) {
+  const number = Number(element);
+
+  if (isNaN(number)) {
+    throw new Error(`[ERROR] '${element}'는 숫자가 아닙니다.`);
+  }
+
+  return number;
+}
+
+function sumElements(elements) {
+  const numbers = elements.map((element) => isNumber(element));
+  const result = numbers.reduce((acc, curr) => acc + curr, 0);
+
+  return `결과: ${result}`;
+}
+
 function printMessage(message) {
   Console.print(message);
 }
@@ -67,6 +84,9 @@ class App {
 
     const { separators, inputBody } = extractCustomSeparator(userInput);
     const filteredBody = splitBySeparators(separators, inputBody);
+    const result = sumElements(filteredBody);
+
+    printMessage(result);
   }
 }
 
