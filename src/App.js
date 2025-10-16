@@ -12,11 +12,11 @@ function extractCustomSeparator(userInput) {
   const defaultSeparators = [",", ":"];
 
   if (userInput.startsWith("//")) {
-    const lastSeparatorIndex = userInput.indexOf("\n");
+    const lastSeparatorIndex = userInput.indexOf("\\n");
 
     if (lastSeparatorIndex === -1) {
       throw new Error(
-        `[ERROR] 커스텀 구분자 정의 시 '\n'을 이용한 마침 표현을 사용해야 합니다.`
+        '[ERROR] 커스텀 구분자 정의 시 \'\\n\'을 이용한 마침 표현을 사용해야 합니다.'
       );
     }
 
