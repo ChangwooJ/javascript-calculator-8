@@ -26,14 +26,21 @@ function extractCustomSeparator(userInput) {
   }
 }
 
+function printMessage(message) {
+  Console.print(message);
+}
+
+async function getInput() {
+  return await Console.readLineAsync('덧셈할 문자열을 입력해 주세요.\n');
+}
+
 class App {
   async run() {
-    Console.print("덧셈할 문자열을 입력해 주세요.");
-    const userInput = Console.readLineAsync();
+    const userInput = await getInput();
 
     // 빈 문자열 예외 처리
     if (userInput === "") {
-      Console.print("결과 : 0");
+      printMessage("결과 : 0");
       return;
     }
   }
