@@ -37,6 +37,16 @@ function extractCustomSeparator(userInput) {
   return { separators: validSeparators, inputBody };
 }
 
+function splitBySeparators(separators, inputBody) {
+  let result = inputBody;
+
+  separators.forEach((sep) => {
+    result = result.split(sep).join(" ");
+  });
+
+  return result.split(" ").map((s) => s.trim());
+}
+
 function printMessage(message) {
   Console.print(message);
 }
@@ -55,10 +65,8 @@ class App {
       return;
     }
 
-    const { separators, inputBody }  = extractCustomSeparator(userInput);
-
-    printMessage(separators);
-    printMessage(inputBody);
+    const { separators, inputBody } = extractCustomSeparator(userInput);
+    const filteredBody = splitBySeparators(separators, inputBody);
   }
 }
 
