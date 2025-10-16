@@ -1,31 +1,31 @@
-import { Console } from "@woowacourse/mission-utils";
+import { Console } from '@woowacourse/mission-utils';
 
 function isNotNumberSeparator(separators) {
   if (separators.some((sep) => /\d/.test(sep))) {
-    throw new Error("[ERROR] 숫자는 구분자에 포함될 수 없습니다.");
+    throw new Error('[ERROR] 숫자는 구분자에 포함될 수 없습니다.');
   }
 
   return separators;
 }
 
 function extractCustomSeparator(userInput) {
-  const defaultSeparators = [",", ":"];
+  const defaultSeparators = [',', ':'];
   let inputBody = userInput;
 
-  if (userInput.startsWith("//")) {
-    const lastSeparatorIndex = userInput.indexOf("\\n");
+  if (userInput.startsWith('//')) {
+    const lastSeparatorIndex = userInput.indexOf('\\n');
 
     // \n 마침 표현이 누락된 경우
     if (lastSeparatorIndex === -1) {
       throw new Error(
-        "[ERROR] 커스텀 구분자 정의 시 '\\n'을 이용한 마침 표현을 사용해야 합니다."
+        '[ERROR] 커스텀 구분자 정의 시 \'\\n\'을 이용한 마침 표현을 사용해야 합니다.'
       );
     }
 
     const customSeparatorArray = userInput
       .slice(2, lastSeparatorIndex)
-      .split("")
-      .filter((c) => c.trim() !== "");
+      .split('')
+      .filter((c) => c.trim() !== '');
 
     defaultSeparators.push(...customSeparatorArray);
 
@@ -40,11 +40,11 @@ function extractCustomSeparator(userInput) {
 function splitBySeparators(separators, inputBody) {
   let result = inputBody;
 
-  separators.forEach((sep) => {
-    result = result.split(sep).join(" ");
+  separators.forEach((separator) => {
+    result = result.split(separator).join(' ');
   });
 
-  return result.split(" ").map((s) => s.trim());
+  return result.split(' ').map((s) => s.trim());
 }
 
 function isNumber(element) {
@@ -59,7 +59,7 @@ function isNumber(element) {
 
 function sumElements(elements) {
   const numbers = elements.map((element) => isNumber(element));
-  const result = numbers.reduce((acc, curr) => acc + curr, 0);
+  const result = numbers.reduce((accumulator, current) => accumulator + current, 0);
 
   return `결과: ${result}`;
 }
@@ -69,7 +69,7 @@ function printMessage(message) {
 }
 
 async function getInput() {
-  return await Console.readLineAsync("덧셈할 문자열을 입력해 주세요.\n");
+  return await Console.readLineAsync('덧셈할 문자열을 입력해 주세요.\n');
 }
 
 class App {
@@ -77,8 +77,8 @@ class App {
     const userInput = await getInput();
 
     // 빈 문자열 예외 처리
-    if (userInput === "") {
-      printMessage("결과 : 0");
+    if (userInput === '') {
+      printMessage('결과: 0');
       return;
     }
 
