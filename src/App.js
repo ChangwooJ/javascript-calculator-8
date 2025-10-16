@@ -1,7 +1,7 @@
 import { Console } from "@woowacourse/mission-utils";
 
 function isNotNumberSeparator(separators) {
-  if (separators.some(sep => /\d/.test(sep))) {
+  if (separators.some((sep) => /\d/.test(sep))) {
     throw new Error("[ERROR] 숫자는 구분자에 포함될 수 없습니다.");
   }
 
@@ -10,23 +10,31 @@ function isNotNumberSeparator(separators) {
 
 function extractCustomSeparator(userInput) {
   const defaultSeparators = [",", ":"];
+  let inputBody = userInput;
 
   if (userInput.startsWith("//")) {
     const lastSeparatorIndex = userInput.indexOf("\\n");
 
+    // \n 마침 표현이 누락된 경우
     if (lastSeparatorIndex === -1) {
       throw new Error(
-        '[ERROR] 커스텀 구분자 정의 시 \'\\n\'을 이용한 마침 표현을 사용해야 합니다.'
+        "[ERROR] 커스텀 구분자 정의 시 '\\n'을 이용한 마침 표현을 사용해야 합니다."
       );
     }
 
-    const customSeparatorArray = userInput.slice(2, lastSeparatorIndex);
+    const customSeparatorArray = userInput
+      .slice(2, lastSeparatorIndex)
+      .split("")
+      .filter((c) => c.trim() !== "");
+
     defaultSeparators.push(...customSeparatorArray);
+
+    inputBody = userInput.slice(lastSeparatorIndex + 2);
   }
 
   const validSeparators = isNotNumberSeparator(defaultSeparators);
 
-  return validSeparators;
+  return { separators: validSeparators, inputBody };
 }
 
 function printMessage(message) {
@@ -47,9 +55,10 @@ class App {
       return;
     }
 
-    const separator = extractCustomSeparator(userInput);
+    const { separators, inputBody }  = extractCustomSeparator(userInput);
 
-    printMessage(separator);
+    printMessage(separators);
+    printMessage(inputBody);
   }
 }
 
