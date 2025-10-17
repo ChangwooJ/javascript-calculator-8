@@ -6,7 +6,7 @@ class App {
 
     // 빈 문자열 예외 처리
     if (userInput === '') {
-      printMessage('결과: 0');
+      printMessage('결과 : 0');
       return;
     }
 
