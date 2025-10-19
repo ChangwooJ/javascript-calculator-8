@@ -1,12 +1,14 @@
-import { getInput, printMessage } from './console';
+import { getInput, printMessage } from "./console.js";
+import { extractCustomSeparator, splitBySeparators } from "./separators.js";
+import { sumElements } from "./calculator.js";
 
 class App {
   async run() {
     const userInput = await getInput();
 
     // 빈 문자열 예외 처리
-    if (userInput === '') {
-      printMessage('결과 : 0');
+    if (userInput === "") {
+      printMessage("결과 : 0");
       return;
     }
 

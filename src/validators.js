@@ -12,6 +12,9 @@ export function isNumber(element) {
   if (isNaN(number)) {
     throw new Error(`[ERROR] '${element}'는 숫자가 아닙니다.`);
   }
+  if (number < 0) {
+    throw new Error('[ERROR] 음수는 입력할 수 없습니다.');
+  }
 
   return number;
 }
