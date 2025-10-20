@@ -1,21 +1,31 @@
-import { getInput, printMessage } from "./console.js";
-import { extractCustomSeparator, splitBySeparators } from "./separators.js";
-import { sumElements } from "./calculator.js";
+import { sumElements } from './model/calculator.js';
+import {
+  extractCustomSeparator,
+  splitBySeparators,
+} from './model/separators.js';
+import { getInput, printMessage } from './view/console.js';
 
 class App {
   async run() {
-    const userInput = await getInput();
+    const userInput = await this.getUserInput();
+    const result = this.calculate(userInput);
+    this.printResult(result);
+  }
 
-    // 빈 문자열 예외 처리
-    if (userInput === "") {
-      printMessage("결과 : 0");
-      return;
-    }
+  async getUserInput() {
+    return await getInput();
+  }
 
-    const { separators, inputBody } = extractCustomSeparator(userInput);
+  calculate(input) {
+    // 빈 문자열 예외처리
+    if (input === '') return '결과 : 0';
+
+    const { separators, inputBody } = extractCustomSeparator(input);
     const filteredBody = splitBySeparators(separators, inputBody);
-    const result = sumElements(filteredBody);
+    return sumElements(filteredBody);
+  }
 
+  printResult(result) {
     printMessage(result);
   }
 }
